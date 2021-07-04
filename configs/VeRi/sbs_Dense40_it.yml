@@ -1,0 +1,41 @@
+_BASE_: ../Base-SBS.yml
+
+INPUT:
+  SIZE_TRAIN: [256, 256]
+  SIZE_TEST: [256, 256]
+
+MODEL:
+  BACKBONE:
+    WITH_IBN: False  # True
+    WITH_NL: False  # True
+    NAME: build_densenet_backbone
+    FEAT_DIM: 1024     # up to backbone输出维度，resnet=2048
+    DEPTH: 121x     
+    PRETRAIN: True # False
+
+SOLVER:
+  OPT: SGD
+  BASE_LR: 0.001  # 0.01
+  ETA_MIN_LR: 7.7e-5
+
+  IMS_PER_BATCH: 64  # 64
+  MAX_ITER: 60      # 160
+  DELAY_ITERS: 30
+  WARMUP_EPOCHS: 10
+  FREEZE_ITERS: 10
+
+  CHECKPOINT_PERIOD: 5 # 20
+
+DATASETS:
+  NAMES: ("VeRi",)
+  TESTS: ("VeRi",)
+
+TEST:
+  EVAL_PERIOD: 5
+  IMS_PER_BATCH: 64 # 128
+
+OUTPUT_DIR: logs/veri/sbs_Dense40/it
+
+PRUNE:
+  PERCENT: 0.3
+  SAVE_DIR: logs/veri/sbs_Dense40/it/pruned

@@ -1,0 +1,40 @@
+_BASE_: ../Base-bagtricks.yml
+
+INPUT:
+  SIZE_TRAIN: [256, 256]
+  SIZE_TEST: [256, 256]
+
+MODEL:
+  BACKBONE:
+    WITH_IBN: False
+    DEPTH: 50x
+  HEADS:
+    POOL_LAYER: gempool
+  LOSSES:
+    TRI:
+      HARD_MINING: False
+      MARGIN: 0.0
+
+DATASETS:
+  NAMES: ("VehicleID",)
+  TESTS: ("SmallVehicleID", "MediumVehicleID", "LargeVehicleID",)
+
+SOLVER:
+  BIAS_LR_FACTOR: 0.1 # 1.
+
+  IMS_PER_BATCH: 64  # 512
+  MAX_ITER: 60
+  STEPS: [30, 50]
+  WARMUP_EPOCHS: 10
+
+  CHECKPOINT_PERIOD: 5
+
+TEST:
+  EVAL_PERIOD: 20
+  IMS_PER_BATCH: 128
+
+OUTPUT_DIR: logs/vehicleid/bagtricks_R50-ibn_4gpu
+
+PRUNE:
+  PERCENT: 0.5
+  SAVE_DIR: logs/vehicleid/bagtricks_R50-ibn_4gpu/pruned
