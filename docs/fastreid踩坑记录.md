@@ -257,11 +257,3 @@ conda中没有opencv-python，可以先执行下面指令安装opencv
 conda install -c https://conda.anaconda.org/menpo opencv
 ```
 
-
-
-版本管理
-
-git push不上去，git pull不下来（要设置rebase）
-
-.gitignore忽略数据库
-
